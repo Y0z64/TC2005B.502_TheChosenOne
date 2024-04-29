@@ -7,8 +7,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
+    public float gravity = -29.43f;
+
     public float speed = 12f;
-    public float gravity = -400f; //Control the gravity velocity here
+    public float sprintSpeed = 25f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -18,13 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSmoothing = 0.5f;
 
     public Vector3 velocity;
-    public float sprintModifier = 6f;
     bool isGrounded;
 
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -40,7 +37,14 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-        move *= speed * Time.deltaTime; // Scale movement by speed and time
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            move *= sprintSpeed * Time.deltaTime; // Scale movement by speed and time
+        } else {
+            move *= speed * Time.deltaTime;
+        }
+
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -50,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y *= jumpSmoothing;
         }
-
 
         // Apply gravity
         velocity.y += gravity * Time.deltaTime;

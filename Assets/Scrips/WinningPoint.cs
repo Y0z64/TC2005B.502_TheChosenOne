@@ -6,7 +6,7 @@ public class WinningPoint : MonoBehaviour
 {
     public UIControl uiControl;
     public Transform playerTransform;
-    public float winDistance = 2f; // Adjust the distance threshold as needed
+    public float winDistance = 4f; // Adjust the distance threshold as needed
 
     // Update is called once per frame
     void Update()
