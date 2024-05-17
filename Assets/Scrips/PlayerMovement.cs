@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 12f;
     public float sprintSpeed = 25f;
+    private float originalSpeed;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -22,8 +21,16 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 velocity;
     bool isGrounded;
 
+    public float teleportDistance = 5f; // Distance to teleport forward
 
-    // Update is called once per frame
+    public float speedBoostDuration = 5f; // Duration of the speed boost
+    public float speedBoostMultiplier = 2f; // Speed multiplier for the boost
+
+    void Start()
+    {
+        originalSpeed = speed;
+    }
+
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -40,11 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            move *= sprintSpeed * Time.deltaTime; // Scale movement by speed and time
-        } else {
+            move *= sprintSpeed * Time.deltaTime;
+        }
+        else
+        {
             move *= speed * Time.deltaTime;
         }
-
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -55,13 +63,38 @@ public class PlayerMovement : MonoBehaviour
             velocity.y *= jumpSmoothing;
         }
 
-        // Apply gravity
         velocity.y += gravity * Time.deltaTime;
-
-        // Add gravity to the movement vector
         move += velocity * Time.deltaTime;
-
-        // Apply the combined movement to the controller
         controller.Move(move);
+
+        // Teleport forward when the 'J' key is pressed
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            TeleportForward();
+        }
+
+        // Just for testing, press 'P' to simulate picking up a speed boost
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartCoroutine(SpeedBoost());
+        }
+    }
+
+    void TeleportForward()
+    {
+        // Calculate the new position by moving forward by teleportDistance
+        Vector3 newPosition = transform.position + transform.forward * teleportDistance;
+        
+        // Move the character controller to the new position
+        controller.enabled = false; // Disable the controller to set the position directly
+        transform.position = newPosition;
+        controller.enabled = true; // Re-enable the controller
+    }
+
+    IEnumerator SpeedBoost()
+    {
+        speed *= speedBoostMultiplier; // Double the player's speed
+        yield return new WaitForSeconds(speedBoostDuration); // Wait for the boost duration
+        speed = originalSpeed; // Reset to original speed
     }
 }
