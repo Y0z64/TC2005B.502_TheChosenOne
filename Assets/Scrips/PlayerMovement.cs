@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
 
     public float teleportDistance = 5f; // Distance to teleport forward
+    private int teleportCount = 3; // Counter for teleport uses
+    private float teleportResetTime = 10f; // Time in seconds to reset the counter
+
+    public UIControl uiControl; // Reference to the UIControl script
 
     public float speedBoostDuration = 5f; // Duration of the speed boost
     public float speedBoostMultiplier = 2f; // Speed multiplier for the boost
@@ -29,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         originalSpeed = speed;
+        UpdateTeleportCountUI(); // Initial update of the UI text
     }
 
     void Update()
@@ -70,7 +75,20 @@ public class PlayerMovement : MonoBehaviour
         // Teleport forward when the 'J' key is pressed
         if (Input.GetKeyDown(KeyCode.J))
         {
-            TeleportForward();
+            if (teleportCount > 0)
+            {
+                TeleportForward();
+                teleportCount--;
+                UpdateTeleportCountUI(); // Update the UI text
+                if (teleportCount == 2) // Start the timer when the first teleport is used
+                {
+                    StartCoroutine(ResetTeleportCounter());
+                }
+            }
+            else
+            {
+                Debug.Log("Teleport limit reached. Please wait before teleporting again.");
+            }
         }
 
         // Just for testing, press 'P' to simulate picking up a speed boost
@@ -84,11 +102,27 @@ public class PlayerMovement : MonoBehaviour
     {
         // Calculate the new position by moving forward by teleportDistance
         Vector3 newPosition = transform.position + transform.forward * teleportDistance;
-        
+
         // Move the character controller to the new position
         controller.enabled = false; // Disable the controller to set the position directly
         transform.position = newPosition;
         controller.enabled = true; // Re-enable the controller
+    }
+
+    IEnumerator ResetTeleportCounter()
+    {
+        yield return new WaitForSeconds(teleportResetTime);
+        teleportCount = 3; // Reset teleport count
+        UpdateTeleportCountUI(); // Update the UI text
+        Debug.Log("Teleport counter reset.");
+    }
+
+    void UpdateTeleportCountUI()
+    {
+        if (uiControl != null)
+        {
+            uiControl.UpdateTeleportCountDisplay(teleportCount);
+        }
     }
 
     IEnumerator SpeedBoost()
