@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -146,5 +148,22 @@ public class PlayerMovement : MonoBehaviour
         speed *= speedBoostMultiplier; // Double the player's speed
         yield return new WaitForSeconds(speedBoostDuration); // Wait for the boost duration
         speed = originalSpeed; // Reset to original speed
+    }
+
+    public PlayerState GetState()
+    {
+        PlayerState state = new PlayerState();
+        state.position = new float[] { transform.position.x, transform.position.y, transform.position.z };
+        state.rotation = new float[] { transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z };
+        state.teleportCount = teleportCount;
+        return state;
+    }
+
+    public void SetState(PlayerState state)
+    {
+        transform.position = new Vector3(state.position[0], state.position[1], state.position[2]);
+        transform.rotation = Quaternion.Euler(state.rotation[0], state.rotation[1], state.rotation[2]);
+        teleportCount = state.teleportCount;
+        UpdateTeleportCountUI();
     }
 }
