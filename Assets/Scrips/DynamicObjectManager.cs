@@ -1,11 +1,9 @@
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class DynamicObjectManager : MonoBehaviour
 {
-    public GameObject objectPrefab;
-    public Transform spawnPoint;
+    public GameObject objectPrefab; // Reference to the prefab to be instantiated
+    public Transform spawnPoint; // Reference to the spawn point
     private GameObject instantiatedObject;
 
     void Update()
@@ -64,6 +62,7 @@ public class DynamicObjectManager : MonoBehaviour
         if (state.objectExists)
         {
             instantiatedObject = Instantiate(objectPrefab, new Vector3(state.objectPosition[0], state.objectPosition[1], state.objectPosition[2]), Quaternion.Euler(state.objectRotation[0], state.objectRotation[1], state.objectRotation[2]));
+            Debug.Log("Object restored at " + new Vector3(state.objectPosition[0], state.objectPosition[1], state.objectPosition[2]));
         }
         else
         {
@@ -71,6 +70,7 @@ public class DynamicObjectManager : MonoBehaviour
             {
                 Destroy(instantiatedObject);
             }
+            Debug.Log("No object to restore");
         }
     }
 }

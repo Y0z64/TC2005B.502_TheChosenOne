@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -165,5 +163,6 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(state.rotation[0], state.rotation[1], state.rotation[2]);
         teleportCount = state.teleportCount;
         UpdateTeleportCountUI();
+        Debug.Log("Player position and teleport count restored");
     }
 }
