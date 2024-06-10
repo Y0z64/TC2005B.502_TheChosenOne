@@ -21,13 +21,15 @@ public class GameStateManager : MonoBehaviour
 
     public void SaveGame()
     {
-        GameState state = new GameState();
-        state.playerState = playerMovement.GetState();
-        state.dynamicObjectState = dynamicObjectManager.GetState();
+        GameState state = new()
+        {
+            playerState = playerMovement.GetState(),
+            dynamicObjectState = dynamicObjectManager.GetState()
+        };
 
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatter = new();
         string path = Application.persistentDataPath + "/gamestate.save";
-        FileStream stream = new FileStream(path, FileMode.Create);
+        FileStream stream = new(path, FileMode.Create);
 
         formatter.Serialize(stream, state);
         stream.Close();
