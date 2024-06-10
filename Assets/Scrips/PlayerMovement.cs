@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static PlayerMovement Instance { get; private set; } // Singleton instance
-
     public CharacterController controller;
     public float gravity = -29.43f;
 
@@ -31,20 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float speedBoostDuration = 5f; // Duration of the speed boost
     public float speedBoostMultiplier = 2f; // Speed multiplier for the boost
-
-    void Awake()
-    {
-        // Ensure only one instance exists
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: Keeps the instance persistent across scenes
-        }
-    }
 
     void Start()
     {
