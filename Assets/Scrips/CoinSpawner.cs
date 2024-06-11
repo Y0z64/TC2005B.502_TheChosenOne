@@ -24,11 +24,7 @@ public class ObjectSpawner : MonoBehaviour
             // Calculate the spawn position in front of the object and elevate it by 7 units
             Vector3 spawnPosition = transform.position + transform.forward * spawnDistance + new Vector3(0,1,0);
             // Instantiate the object at the spawn position
-            GameObject spawnedObject = Instantiate(objectToSpawn, spawnPosition, Quaternion.identity);
-            // Set the tag to "Coin"
-            spawnedObject.tag = "Coin";
-            // Rotate the object 90 degrees on the X-axis
-            spawnedObject.transform.rotation = Quaternion.Euler(90, 0, 0);
+            Instantiate(objectToSpawn, spawnPosition, Quaternion.identity);
         }
         else
         {

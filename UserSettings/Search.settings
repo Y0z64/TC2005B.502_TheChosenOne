@@ -11,6 +11,9 @@ scopes = {
 	"last_search.310DEAF1" = ""
 	"OpenInspectorPreview.310DEAF1" = "0"
 	"currentGroup.310DEAF1" = "all"
+	"last_search.FD7A1EDD" = "ref=\"Assets/Scrips/WinningPoint.cs\""
+	"OpenInspectorPreview.FD7A1EDD" = "0"
+	"currentGroup.FD7A1EDD" = "all"
 }
 providers = {
 	adb = {
