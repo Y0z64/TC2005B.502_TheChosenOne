@@ -118,6 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1040ccfd7b4b935d8aa64d66585ef553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiControl: {fileID: 0}
+  playerTransform: {fileID: 0}
+  winDistance: 4
 --- !u!1 &1567627338768103089
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +166,6 @@ GameObject:
   - component: {fileID: 919502045552982502}
   - component: {fileID: 82992360072414062}
   - component: {fileID: 304645706511149519}
-  - component: {fileID: 6460452372859482140}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -270,6 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1040ccfd7b4b935d8aa64d66585ef553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiControl: {fileID: 0}
+  playerTransform: {fileID: 0}
+  winDistance: 4
 --- !u!114 &304645706511149519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,20 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 0}
   spawnDistance: 10
---- !u!114 &6460452372859482140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4059674616830225912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 580cbf27123bf462b8c6b7c4081002f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerMovement: {fileID: 7124414949871218838}
-  dynamicObjectManager: {fileID: 0}
 --- !u!1 &4173304444319500713
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +408,7 @@ GameObject:
   - component: {fileID: 4342136102073394503}
   - component: {fileID: 197434484330323014}
   - component: {fileID: 4533180858594331838}
+  - component: {fileID: 3054934053595461016}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -508,6 +500,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3054934053595461016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6070983548313899096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c3b86f496de41b192d8f4e559a2e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  makeTransparent: 1
 --- !u!1 &6652489336394077026
 GameObject:
   m_ObjectHideFlags: 0

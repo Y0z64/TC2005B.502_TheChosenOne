@@ -133,7 +133,7 @@ namespace SlimUI.ModernMenu{
 
 		public void LoadScene(string scene){
 			if(scene != ""){
-				StartCoroutine(LoadAsynchronously(scene));
+				UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
 			}
 		}
 

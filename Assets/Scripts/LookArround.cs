@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookArround : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float mouseSensitivity = 100f;
+    private float mouseSensitivity = PlayerPrefs.GetFloat("MouseSensitivity");
+    private int inverted = PlayerPrefs.GetInt("Inverted");
 
     public Transform playerBody;
 
@@ -21,10 +19,18 @@ public class LookArround : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-        
-        xRotation -= mouseY; //Change this to += to invert camera direction
-        xRotation = Mathf.Clamp(xRotation, -90f, 90);
 
+        // Check if inverted is set to invert the mouse movement
+        if (inverted == 1)
+        {
+            xRotation += mouseY; // Invert the Y axis movement
+        }
+        else
+        {
+            xRotation -= mouseY; // Normal Y axis movement
+        }
+
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
